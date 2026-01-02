@@ -1,5 +1,6 @@
 #include "handler.h"
 #include "response_builder.h"
+#include "headers/publish_event.h"
 #include <string.h>
 #include <stdio.h>
 
@@ -30,6 +31,10 @@ enum MHD_Result route_request(void *cls,
             enum MHD_Result ret = (enum MHD_Result) MHD_queue_response(connection, MHD_HTTP_OK, resp);
             MHD_destroy_response(resp);
             return ret;
+        }
+    } else if (strcmp(method, "POST") == 0) {
+        if (strcmp(url, "/publish") == 0) {
+            return handle_publish_request(connection, upload_data, upload_data_size, con_cls);
         }
     }
 
