@@ -1,6 +1,7 @@
 #include "handler.h"
 #include "response_builder.h"
 #include "headers/publish_event.h"
+#include "headers/create_topic.h"
 #include <string.h>
 #include <stdio.h>
 
@@ -35,6 +36,8 @@ enum MHD_Result route_request(void *cls,
     } else if (strcmp(method, "POST") == 0) {
         if (strcmp(url, "/publish") == 0) {
             return handle_publish_request(connection, upload_data, upload_data_size, con_cls);
+        } else if (strcmp(url, "/create_topic") == 0) {
+            return handle_create_topic_request(connection, upload_data, upload_data_size, con_cls);
         }
     }
 
